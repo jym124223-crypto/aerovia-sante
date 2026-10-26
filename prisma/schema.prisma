@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model InstitutionRequest {
+  id                    String   @id @default(uuid())
+  institutionName       String
+  contactName           String
+  role                  String
+  email                 String
+  phone                 String
+  region                String
+  city                  String
+  institutionType       String
+  department            String
+  specialty             String?
+  requiredTherapists    Int
+  startDate             DateTime
+  endDate               DateTime?
+  shift                 String
+  detailedSchedule      String?
+  urgencyLevel          String
+  specificSkills        String?
+  description           String
+  communicationPref     String
+  consent               Boolean
+  status                String   @default("Nouvelle") // Nouvelle, À valider, Recherche de personnel, Ressource proposée, Confirmée, Terminée, Annulée
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  adminNotes            String?
+}
+
+model Candidate {
+  id                    String   @id @default(uuid())
+  firstName             String
+  lastName              String
+  phone                 String
+  email                 String
+  city                  String
+  regions               String // Comma separated or JSON string
+  licenseNumber         String
+  yearsOfExperience     Int
+  expGeneral            Boolean  @default(false)
+  expCritical           Boolean  @default(false)
+  expEmergency          Boolean  @default(false)
+  expOperatingRoom      Boolean  @default(false)
+  expAnesthesia         Boolean  @default(false)
+  expPediatrics         Boolean  @default(false)
+  expNeonatology        Boolean  @default(false)
+  expTransport          Boolean  @default(false)
+  availDay              Boolean  @default(false)
+  availEvening          Boolean  @default(false)
+  availNight            Boolean  @default(false)
+  availWeek             Boolean  @default(false)
+  availWeekend          Boolean  @default(false)
+  availRemote           Boolean  @default(false)
+  hasVehicle            Boolean  @default(false)
+  availableFrom         DateTime
+  desiredMandate        String
+  cvUrl                 String?
+  comments              String?
+  consent               Boolean
+  status                String   @default("Nouvelle") // Nouvelle, À vérifier, Documents manquants, Entrevue, Approuvée, Active, Inactive, Refusée
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  adminNotes            String?
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  role      String   @default("ADMIN") // SUPER_ADMIN, ADMIN, etc.
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
